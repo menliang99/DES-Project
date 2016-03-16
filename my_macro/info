@@ -1,0 +1,37 @@
+BEGIN_DEF "my_operator"
+    MACRO = "DES_hw";
+    STATEFUL = NO;
+    EXTERNAL = NO;
+    PIPELINED = YES;
+    LATENCY = 49;
+
+
+
+    INPUTS = 4:
+      I0 = INT  1 BITS (reset)
+      I1 = INT 64 BITS (key)	  	
+      I2 = INT 64 BITS (din)
+      I3 = INT  1 BITS (dinvld)
+      ;	
+	  
+	  OUTPUTS = 1:
+	  O0 = INT 64 BITS (dout)
+      ;
+
+    IN_SIGNAL : 1 BITS "clk" = "CLOCK";
+
+    DEBUG_HEADER = #
+		uint64_t my_operator__dbg (uint64_t key, uint64_t datain);
+    #;
+
+    DEBUG_FUNC = #
+
+	uint64_t my_operator__dbg (uint64_t key, uint64_t datain) {
+       
+	keyfc(key);
+	return (DES(datain));
+                                    
+}
+
+    #;
+END_DEF
